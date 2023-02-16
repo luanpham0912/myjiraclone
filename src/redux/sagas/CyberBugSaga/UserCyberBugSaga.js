@@ -2,7 +2,7 @@
 import { call, delay,  takeLatest, put, select } from 'redux-saga/effects'
 import { cyberbugService } from '../../../services/CyberBug/CyberBugService';
 import { userService } from '../../../services/CyberBug/UserService';
-import { STATUS_CODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
+import { history, STATUS_CODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
 import { SIGNIN_API, SIGNUP_API, USLOGIN } from '../../constants/CyberBugConst';
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/LoadingConst'
 
@@ -17,12 +17,12 @@ function * SignInSaga(action) {
         localStorage.setItem(TOKEN,data.content.accessToken)
         localStorage.setItem(USER_LOGIN,JSON.stringify(data.content))
 
-        let history = yield select(state => state.HistoryReducer.history)
+       
         yield put({
             type: USLOGIN,
             userLogin : data.content
         })
-        history.push("/home")
+        history.push("/projectmanager")
 
     }catch(err){
         console.log(err.response)
@@ -46,7 +46,7 @@ function * SignUpSaga(action) {
     {
         const {data} = yield call(()=>{ return cyberbugService.signupCyberBug(action.userRegister)})
       
-        let history = yield select(state => state.HistoryReducer.history)
+       
 
         history.push("/login")
 
