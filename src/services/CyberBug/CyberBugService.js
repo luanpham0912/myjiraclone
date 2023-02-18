@@ -11,7 +11,7 @@ export const cyberbugService = {
     },
     signupCyberBug  : (userRegister) =>{
         return Axios({
-             url: `${DOMAIN_CYBERBUG}/users/signin`,
+             url: `${DOMAIN_CYBERBUG}/Users/signup`,
              method : "POST",
              data: userRegister
          })

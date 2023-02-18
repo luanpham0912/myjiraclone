@@ -1,152 +1,166 @@
 
 
-// import React, { useRef, useState } from 'react'
-// import { AutoComplete, Table } from 'antd';
-// import { EditOutlined, DeleteOutlined, SearchOutlined, DiffOutlined } from '@ant-design/icons';
-// import { Input } from 'antd';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useEffect } from 'react';
-// import { LayDanhSachFilmAction, xoaPhimAction } from '../../Redux/Actions/QuanLyPhimAction';
-// import { NavLink } from 'react-router-dom';
-// import { Fragment } from 'react';
-// import { LayDanhSachNguoiDung, XoaNguoiDungAction } from '../../Redux/Actions/QuanLyNguoiDungAction';
-// const { Search } = Input;
+import React, { useRef, useState } from 'react'
+import { AutoComplete, Table } from 'antd';
+import { EditOutlined, DeleteOutlined, SearchOutlined, DiffOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { NavLink } from 'react-router-dom';
+import { Fragment } from 'react';
+
+const { Search } = Input;
 
 
-// export default function UserManager(props) {
+export default function UserManager(props) {
 
-//   const { arrUsers } = useSelector(state => state.QuanLyUsers)
-//   const dispatch = useDispatch()
-//   useEffect(() => {
-//     dispatch(LayDanhSachNguoiDung())
-//     dispatch({
-//       type: "HIDE_LOADING"
-//     })
-//   }, [])
+  const { arrUser } = useSelector(state => state.UsersCyberBugReducer)
 
-//   const columns = [
-//     {
-//       title: 'Tài khoản',
-//       dataIndex: 'taiKhoan',
-//       key: 'taiKhoan',
-//       sorter: (a, b) => {
-//         let taiKhoanA = a.taiKhoan.toLowerCase().trim()
-//         let taiKhoanB = b.taiKhoan.toLowerCase().trim()
-//         if (taiKhoanA > taiKhoanB) {
-//           return 1
-//         }
-//         return -1
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch({
+        type: "GET_ALL_USERS_SAGA",
+        keyword : ''
+    })
 
-//       },
-//       defaultSortOrder: 'ascend',
-//       sortDirections: ['ascend', 'descend'],
-//       width: '20%',
-//     },
-//     {
-//       title: 'họ tên',
-//       dataIndex: 'hoTen',
-//       key: 'hoTen',
+  }, [])
+  console.log(arrUser)
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'userId',
+      key: 'userId',
+  
+      sorter: (a, b) => {
 
-//       sortDirections: ['ascend', 'descend'],
+        if (a > b) {
+          return 1
+        }
+        return -1
 
-//       width: '25%',
-//     },
-//     {
+      },
+    
+      sortDirections: ['ascend'],
 
-//       title: 'email',
-//       dataIndex: 'email',
-//       key: 'email',
+ 
+      width: '10%',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
 
-//       width: '25%',
-//     },
-//     {
+     sorter: (a, b) => {
+        let taiKhoanA = a.name.toLowerCase().trim()
+        let taiKhoanB = b.name.toLowerCase().trim()
+        if (taiKhoanA > taiKhoanB) {
+          return 1
+        }
+        return -1
 
-//       title: 'số điện thoại',
-//       dataIndex: 'soDt',
-//       key: 'soDt',
+      },
+      defaultSortOrder: 'ascend',
+      sortDirections: ['ascend', 'descend'],
+     
+    },
+    {
 
-//       sortDirections: ['ascend'],
-//       width: '10%',
-//     },
-//     {
-//       title: 'Loại người dùng',
-//       dataIndex: 'maLoaiNguoiDung',
-//       key: 'maLoaiNguoiDung',
-//       sorter: (a) => {
+      title: 'email',
+      dataIndex: 'email',
+      key: 'email',
 
-//         if (a.maLoaiNguoiDung === "QuanTri") {
-//           return 1
-//         } else {
-//           return -1
-//         }
+     
+    },
+    {
 
+      title: 'phone',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
 
-//       },
+      sortDirections: ['ascend'],
+     
+    },
+    {
+      title: 'Avatar',
+      dataIndex: 'avatar',
+      key: 'avatar',
+    render : (item,index)=>{
+        return <img key={index.userId} src={item} style={{width: "32px"}} alt='avatar' />
+    },
 
-//       width: '10%',
+  
 
-//     },
-//     {
-//       title: 'Action',
-//       dataIndex: 'action',
-//       key: 'action',
-//       render: (text, record, index) => {
-//         return <Fragment>
-//           <NavLink key={1} to={`/users/edit/${record.taiKhoan}`} className='text-blue-600 mr-2'> <EditOutlined /></NavLink>
-//           <span key={2} onClick={() => {
-//             if (window.confirm("bạn có chắc xóa người dùng " + record.taiKhoan)) {
-//               dispatch(XoaNguoiDungAction(record.taiKhoan))
-//             }
-//           }} className='text-red-600 cursor-pointer'> <DeleteOutlined /></span>
-
-
-//         </Fragment>
-//       },
-//       width: '10%',
-
-//     },
-//   ];
-
-//   let searchRef = useRef(null)
-
-//   const onChange = (pagination, filters, sorter, extra) => {
-//     console.log('params', pagination, filters, sorter, extra);
-//   };
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+      render: (text, record, index) => {
+        return <Fragment>
+          <NavLink key={1} to={`/usermanager/edit/${record.userId}`} className='btn btn-outline-primary mr-2'> <EditOutlined /></NavLink>
+          <span key={2} onClick={() => {
+            if (window.confirm("bạn có chắc xóa người dùng " + record.name)) {
+              dispatch({
+                type : "DELETE_USER_SAGA",
+                id : record.userId
+              })
+            }
+          }} className='btn btn-outline-danger'> <DeleteOutlined /></span>
 
 
-//   const handleSearch = (value) => {
-//     //debounce search
-//     if (searchRef.current) {
+        </Fragment>
+      },
 
-//       clearTimeout(searchRef.current)
-//     }
-//     searchRef.current = setTimeout(() => {
-//       dispatch(LayDanhSachNguoiDung(value))
-//     }, 300)
 
-//   };
+    },
+  ];
 
-//   return (
-//     <div>
-//       <h3 className='text-3xl'> QUẢN LÝ NGƯỜI DÙNG </h3>
+  let searchRef = useRef(null)
 
-//       <AutoComplete
-//         style={{
-//           width: '98%',
-//           marginBottom: "10px"
-//         }}
-//         onSearch={handleSearch}
-//         allowClear
-//         placeholder="Nhập tên người dùng bạn muốn tìm kiếm"
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log('params', pagination, filters, sorter, extra);
+  };
 
-//       >
-//         {/* <Input.Search size="middle" placeholder="Nhập tên phim bạn muốn tìm kiếm" /> */}
-//       </AutoComplete>
-//       <span> <SearchOutlined className='text-blue-600' /></span>
-//       <Table size='small' rowKey={"taiKhoan"} columns={columns} dataSource={arrUsers} onChange={onChange} />
-//     </div>
-//   )
-// }
+
+  const handleSearch = (value) => {
+    console.log(value,"hahahaha")
+    //debounce search
+    if (searchRef.current) {
+
+      clearTimeout(searchRef.current)
+    }
+    searchRef.current = setTimeout(() => {
+        dispatch({
+            type: "GET_ALL_USERS_SAGA",
+            keyword : value
+        })
+    }, 300)
+
+  };
+
+  return (
+    <div className=' mt-4 mx-4' style={{width:"70%"}}>
+  
+
+      <AutoComplete
+        style={{
+            marginLeft :"auto",
+          width: '80%',
+          marginBottom: "10px"
+        }}
+        onSearch={handleSearch}
+        allowClear
+        placeholder="Nhập tên người dùng bạn muốn tìm kiếm"
+
+      >
+        {/* <Input.Search size="middle" placeholder="Nhập tên phim bạn muốn tìm kiếm" /> */}
+      </AutoComplete>
+      <span> <SearchOutlined className='text-blue-600' /></span>
+      <Table size='small' rowKey={"userId"} columns={columns} dataSource={arrUser} onChange={onChange} />
+    </div>
+  )
+}
 
 
 

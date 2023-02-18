@@ -23,18 +23,17 @@ export default function ProjectManager() {
     let { userSearch } = useSelector(state => state.UsersCyberBugReducer)
     const columns = [
         {
-            title: 'id',
+            title: 'ID',
             dataIndex: 'id',
             sorter: (a, b) => a.id - b.id,
             sortDirections: ['descend'],
-            // specify the condition of filtering result
 
         },
         {
-            title: 'projectName',
+            title: 'Project Name',
             dataIndex: 'projectName',
             render : (text,record,index) => {
-                return <NavLink to={`/indexcyberbug/${record.id}`}>
+                return <NavLink to={`/projectmanager/projectdetail/${record.id}`}>
                     {text}
                 </NavLink>
             },
@@ -46,19 +45,8 @@ export default function ProjectManager() {
             },
 
         },
-        // {
-        //     title: 'description',
-        //     dataIndex: 'description',
-        //     render: (text, record, index) => {
-        //         let jsxContent = ReactHtmlParser(text);
-        //         return <Fragment key={index}>
-        //             {jsxContent}
-        //         </Fragment>
-        //     }
-
-        // },
         {
-            title: 'category',
+            title: 'Category',
             dataIndex: 'categoryName',
             sorter: (a, b) => {
                 if (a.categoryName?.trim().toLowerCase() < b.categoryName?.trim().toLowerCase()) {
@@ -68,7 +56,7 @@ export default function ProjectManager() {
             },
         },
         {
-            title: 'creator',
+            title: 'Creator',
             dataIndex: 'creator',
             render: (text, record, index) => {
                 return <Tag color="lime">
@@ -80,10 +68,10 @@ export default function ProjectManager() {
             title: 'Member',
             dataIndex: 'members',
             render: (text, record, index) => {
-                // console.log("record", record)
+               
                 return <div>
                     {record.members?.slice(0, 3).map((member, index) => {
-                        return <Popover placement="bottom" title={'text'} key={index} content={() => {
+                        return <Popover placement="bottom" title={'Members List'} key={index} content={() => {
                             return <table className='table'>
                                 <thead>
                                     <tr>
@@ -107,7 +95,7 @@ export default function ProjectManager() {
                                                         "userId" : item.userId, 
                                                     }
                                                 })
-                                            }} style={{borderRadius : '20px'}} className='btn btn-danger'>x</button></td>
+                                            }} style={{borderRadius : '2px',fontSize:"12px"}} className='btn btn-danger'>x</button></td>
                                         </tr>
                                     })}
                                 </tbody>
@@ -120,15 +108,14 @@ export default function ProjectManager() {
                     })}
 
                     {record.members?.length > 3 ? <Avatar>...</Avatar> : ''}
-                    <Popover placement="bottom" title={'Search User'} content={() => {
+                    <Popover style={{width :"10px"}} placement="bottom" title={'Add User'} content={() => {
                         return <AutoComplete
                             onChange={(text) => {
                                 setStateValue(text)
                             }}
                             value={stateValue}
                             onSelect={(valueSelec, option) => {
-                                // console.log("value",value)
-                                // console.log("option",option)
+                 
                                 setStateValue(option.label)
                                 dispatch({
                                     type: "ASSIGN_USERS_PROJECT_SAGA",
@@ -153,7 +140,7 @@ export default function ProjectManager() {
                    
                             }} style={{ width: "100%" }} />
                     }} trigger="click">
-                        <Button style={{ borderRadius: "100%" }}>+</Button>
+                        <span style={{ display:"inline-block", borderRadius: "100%" ,width : "32px", height :"32px ",lineHeight :"32px" ,textAlign :"center" , backgroundColor :"#666", marginTop:"1px", padding : 0, cursor:"pointer" }}>+</span>
                     </Popover>
                 </div>
             }
@@ -164,7 +151,7 @@ export default function ProjectManager() {
             render: (text, record, index) => {
 
                 return <div className='container'>
-                    <button className='btn btn-primary' onClick={() => {
+                    <button className='btn btn-outline-primary mr-2' onClick={() => {
                         dispatch({
                             type: 'OPEN_FORM',
                             title : "Form Edit",
@@ -187,7 +174,7 @@ export default function ProjectManager() {
                         okText="Yes"
                         cancelText="No"
                     >
-                        <button className='btn btn-danger' >{<DeleteOutlined />}</button>
+                        <button className='btn btn-outline-danger' >{<DeleteOutlined />}</button>
                     </Popconfirm>
 
                 </div>

@@ -3,6 +3,7 @@ import { call, delay,  takeLatest, put, select } from 'redux-saga/effects'
 import { cyberbugService } from '../../../services/CyberBug/CyberBugService';
 import { userService } from '../../../services/CyberBug/UserService';
 import { history, STATUS_CODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
+import { notifyFunction } from '../../../util/Notification/Notification';
 import { SIGNIN_API, SIGNUP_API, USLOGIN } from '../../constants/CyberBugConst';
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/LoadingConst'
 
@@ -25,7 +26,11 @@ function * SignInSaga(action) {
         history.push("/projectmanager")
 
     }catch(err){
-        console.log(err.response)
+        if(err.response?.status == 400){
+            // alert('tài khoản hoặc mật khẩu không đúng')
+            notifyFunction('error','Tài khoản hoặc mật khẩu không !')
+        }
+        console.log(err.response.status)
     }
     yield put({
         type : HIDE_LOADING
@@ -52,6 +57,9 @@ function * SignUpSaga(action) {
 
     }catch(err){
         console.log(err.response)
+        if(err.response?.status !== 200){
+            notifyFunction("error","Email đã tồn tại!")
+        }
     }
     yield put({
         type : HIDE_LOADING
@@ -135,7 +143,8 @@ function * getAllUserSaga(action) {
 
     try
     {
-        const {data} = yield call(()=>{ return userService.getAllUser()})
+        const {data} = yield call(()=>{ return userService.getAllUser(action.keyword)})
+      
         yield put({
             type: "GET_USER",
             arrUser : data.content
@@ -181,4 +190,49 @@ function * getUserByProjectSaga(action) {
 
 export function * theoDoiGetUserByProjectSaga(){
     yield takeLatest("GET_USERS_BYPROJECT_SAGA",getUserByProjectSaga)
+}
+
+function * editUserSaga(action) {
+    
+    try
+    {
+        const {data,status} = yield call(()=>{ return userService.editUser(action.user)})
+        console.log(data)
+        if(status === STATUS_CODE.SUCCESS){
+            notifyFunction("success","Edit Completed!")
+           history.push('/usermanager')
+        }
+       
+    }catch(err){
+        console.log(err.response)
+    }
+
+}
+
+export function * theoDoiEditUserSaga(){
+    yield takeLatest("EDIT_USER_SAGA",editUserSaga)
+}
+
+function * deleteUserSaga(action) {
+    
+    try
+    {
+        const {data,status} = yield call(()=>{ return userService.deleteUser(action.id)})
+        console.log(data)
+        if(status === STATUS_CODE.SUCCESS){
+          
+            yield put({
+                type: "GET_ALL_USERS_SAGA",
+                keyword : ''
+            })
+        }
+        notifyFunction("success","Delete Completed!")
+    }catch(err){
+        console.log(err.response)
+    }
+
+}
+
+export function * theoDoiDeleteUserSaga(){
+    yield takeLatest("DELETE_USER_SAGA",deleteUserSaga)
 }

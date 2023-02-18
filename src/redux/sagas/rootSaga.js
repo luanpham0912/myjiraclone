@@ -31,6 +31,8 @@ export function* rootSaga() {
     UserCyberBugSaga.theoDoiRemoveUsersFromProject(),
     UserCyberBugSaga.theoDoiGetAllUsers(),
     UserCyberBugSaga.theoDoiGetUserByProjectSaga(),
+    UserCyberBugSaga.theoDoiEditUserSaga(),
+    UserCyberBugSaga.theoDoiDeleteUserSaga(),
     StatusSaga.theoDoiGetStatusSaga(),
     PrioritySaga.theoDoiGetAllPrioritySaga(),
     TaskSaga.theoDoiGetTaskDetailSaga(),

@@ -24,11 +24,11 @@ export default function Sidebar() {
     const dispatch = useDispatch()
     return (
         <Fragment>
-            <Sider  width={150} trigger={null} collapsible collapsed={collapsed}>
+            <Sider width={150} trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo" />
                 <Menu
                  
-                style={{height: "100vh" , paddingTop : "50px", position : "relative", top: 0, left : 0, zIndex : 10}}
+                style={{height: "660px" , paddingTop : "50px", position : "relative", top: 0, left : 0, zIndex : 10}}
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
@@ -46,11 +46,11 @@ export default function Sidebar() {
                                 
                             }
                         },
-                        {
-                            key: '2',
-                            icon: <SearchOutlined />,
-                            label: 'Search',
-                        },
+                        // {
+                        //     key: '2',
+                        //     icon: <SearchOutlined />,
+                        //     label: 'Search',
+                        // },
 
                     ]}
                 />

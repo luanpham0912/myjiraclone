@@ -22,14 +22,14 @@ function CreateProject(props) {
 
     })
   }, []);
-  
+
   return (
     <div className='container-fluid mt-5' style={{ width: "78%" }} onChange={handleChange}>
       <h3> Create Project </h3>
       <div className='container' >
         <div className='form-group'>
           <p>Name</p>
-          <input className='form-control' name='projectName' onChange={handleChange}/>
+          <input className='form-control' name='projectName' onChange={handleChange} />
         </div>
         <p>Description</p>
         <Editor
@@ -37,8 +37,8 @@ function CreateProject(props) {
           name='description'
           apiKey='8n50oayin2bzp97moof00naoprj8or9kss104w74509cpnfv'
           onEditorChange={(newValue, editor) => {
-        
-            setFieldValue('description',newValue)
+
+            setFieldValue('description', newValue)
             // setValue(newValue);
             // setText(editor.getContent({format: 'text'}));
           }}
@@ -76,7 +76,7 @@ function CreateProject(props) {
 const createProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    
+
 
     return {
       projectName: '',
@@ -94,7 +94,7 @@ const createProjectForm = withFormik({
 
     props.dispatch({
       type: "CREATE_PROJECT_SAGA",
-      newProject : values
+      newProject: values
     })
   },
 

@@ -10,7 +10,8 @@ if(localStorage.getItem(USER_LOGIN)){
 let usersCyberBug = {
     userLogin : usLogin,
     userSearch : [],
-    arrUser :[]
+    arrUser :[],
+    userEdit : {}
 }
 
 export const UsersCyberBugReducer = (state = usersCyberBug,action) => {
@@ -25,6 +26,14 @@ export const UsersCyberBugReducer = (state = usersCyberBug,action) => {
         }
         case "GET_USER_BYPROJECT" : {
             state.arrUser = action.arrUser
+            return {...state}
+        }
+        case "GET_USER" : {
+            state.arrUser = action.arrUser
+            return {...state}
+        }
+        case "GET_USER_EDIT" : {
+            state.userEdit = action.userEdit[0]
             return {...state}
         }
         default : return {...state}

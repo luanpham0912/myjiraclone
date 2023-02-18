@@ -12,7 +12,7 @@ export const signinCyberBugAction = (email, password) =>{
 export const signUpCyberBugAction = (email, password,name,phone) =>{
   return{  
     type : SIGNUP_API,
-    userLogin : {
+    userRegister : {
         email : email,
         password : password,
         name : name,

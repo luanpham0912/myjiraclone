@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import MenuSidebar from "../../components/CyberBug/MenuSidebar/MenuSidebar";
 import ModalCyberBug from "../../components/CyberBug/Modal/ModalCyberBug";
 import Sidebar from "../../components/CyberBug/Sidebar/Sidebar";
-import infoModalCyberBug from "../../components/CyberBug/Modal/infoModalCyberBug";
+
 
 export const CyberBugTempate = (props) => {
     const {Component, ...restParam} = props
@@ -13,7 +13,6 @@ export const CyberBugTempate = (props) => {
             <MenuSidebar/>
             <Component  {...propsRoute}/>
             <ModalCyberBug/>
-   
         </div>
     }
     }/>

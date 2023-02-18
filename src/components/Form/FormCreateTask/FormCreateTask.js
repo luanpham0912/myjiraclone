@@ -24,9 +24,9 @@ function FormCreateTask(props) {
     } = props;
     
 
-    console.log("value",values)
 
- 
+
+    console.log("first")
     const [users,setUsers] = useState()
 
 
@@ -59,11 +59,11 @@ function FormCreateTask(props) {
     })
 
     return (
-        <div className='container'>
+        <div className='container '>
             <div className='form-group'>
                 <p>Project</p>
                 <select name="projectId" className='form-control' value={values.projectId} onChange={(e)=>{
-                    console.log("projectId",  e.target.value)
+                   
                     dispatch({
                         type: "GET_USERS_BYPROJECT_SAGA",
                         projectId : e.target.value
@@ -78,10 +78,18 @@ function FormCreateTask(props) {
                 </select>
             </div>
             <div className='form-group'>
-                <div className='row'>
-                    <div className='col-12'>
-                        <p>TaskName</p>
+                <div className='row mb-2'>
+                    <div className='col-6'>
+                        <p>Task Name</p>
                         <input name='taskName' className='form-control' onChange={handleChange}/>
+                    </div>
+                    <div className='col-6'>
+                        <p>Status Task</p>
+                        <select className='form-control' name='statusId' value={values.statusId} onChange={handleChange}>
+                        {arrStatus.map((item, index) => {
+                                return <option key={index} value={item.statusId}>{item.statusName}</option>
+                            })} 
+                        </select>
                     </div>
                 </div>
                 <div className='row'>
@@ -131,7 +139,7 @@ function FormCreateTask(props) {
                     </div>
                     <div className='col-6'>
                         <p>Time Tracking</p>
-                        <Slider max={Number(timeTracking.timeTrackingSpent) + Number(timeTracking.timeTrackingRemaing)} value={timeTracking.timeTrackingSpent} defaultValue={0} tooltip={{ open: true }} onChange={handleChange}/>
+                        <Slider max={Number(timeTracking.timeTrackingSpent) + Number(timeTracking.timeTrackingRemaing)} value={timeTracking.timeTrackingSpent} defaultValue={0} tooltip={{ open: false }} onChange={handleChange}/>
                     </div>
                 </div>
             </div>
@@ -222,6 +230,7 @@ const createProjectForm = withFormik({
                 typeId: props.arrType[0]?.id,
                 priorityId: props.arrPriority[0]?.priorityId,
                 listUserAsign: []
+                
               
         }
     },
@@ -231,7 +240,6 @@ const createProjectForm = withFormik({
     }),
 
     handleSubmit: (values, { props, setSubmitting }) => {
-        console.log("value", values)
         props.dispatch({
             type: "CREATE_TASK_SAGA",
             newTask: values
