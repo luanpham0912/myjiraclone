@@ -99,7 +99,7 @@ const editProjectForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => {
 
-        console.log("props",props.editProject)
+        
         return {
             id: props.editProject.id,
             projectName: props.editProject.projectName,
@@ -114,7 +114,7 @@ const editProjectForm = withFormik({
     }),
 
     handleSubmit: (values, { props, setSubmitting }) => {
-        console.log("value",values)
+        
         props.dispatch({
             type: "UPDATE_PROJECT_SAGA",
             projectUpdate : values

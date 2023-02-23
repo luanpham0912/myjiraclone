@@ -1,5 +1,6 @@
 import { takeLatest, put, call, delay ,select} from 'redux-saga/effects'
 import { taskService } from '../../../services/CyberBug/TaskService'
+import { notifyFunction } from '../../../util/Notification/Notification'
 function * getTaskDetailSaga(action) {
    try{
     const {data,status} = yield call(()=> taskService.getTaskDetail(action.taskId))
@@ -54,10 +55,9 @@ function * updateTaskSaga(action) {
 
     try{
      const {data,status} = yield call(()=> taskService.updateTask(taskUpdate))
-     console.log('taskdetail' ,data)
      yield put({
          type : 'GET_TASK_DETAIL_SAGA',
-         taskDetailModal : taskUpdate.taskId
+         taskId : taskUpdate.taskId
      })
     yield put({
         type: "GET_PROJECT_DETAIL_SAGA",
@@ -91,4 +91,26 @@ function * updateTaskSaga(action) {
  }
  export function * theoDoiCreateTaskSaga(){
      yield takeLatest('CREATE_TASK_SAGA',createTaskSaga)
+ }
+
+
+ function * removeTaskSaga(action) {
+    try{
+     const {data,status} = yield call(()=> taskService.removeTask(action.taskDetailModal.taskId))
+
+
+     yield put({
+        type: "GET_PROJECT_DETAIL_SAGA",
+        projectId : action.taskDetailModal.projectId
+    })
+    notifyFunction("success","Remove Task successfully!")
+    }catch(err){
+     console.log(err)
+    }
+    yield put({
+        type: "CLOSE_DRAWER",
+    })
+ }
+ export function * theoDoiRemoveTaskSaga(){
+     yield takeLatest('REMOVE_TASK_SAGA',removeTaskSaga)
  }

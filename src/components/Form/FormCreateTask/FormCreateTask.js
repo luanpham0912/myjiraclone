@@ -23,13 +23,6 @@ function FormCreateTask(props) {
         setFieldValue
     } = props;
     
-
-
-
-    console.log("first")
-    const [users,setUsers] = useState()
-
-
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch({

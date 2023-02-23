@@ -197,7 +197,7 @@ function * editUserSaga(action) {
     try
     {
         const {data,status} = yield call(()=>{ return userService.editUser(action.user)})
-        console.log(data)
+      
         if(status === STATUS_CODE.SUCCESS){
             notifyFunction("success","Edit Completed!")
            history.push('/usermanager')
@@ -218,7 +218,7 @@ function * deleteUserSaga(action) {
     try
     {
         const {data,status} = yield call(()=>{ return userService.deleteUser(action.id)})
-        console.log(data)
+      
         if(status === STATUS_CODE.SUCCESS){
           
             yield put({

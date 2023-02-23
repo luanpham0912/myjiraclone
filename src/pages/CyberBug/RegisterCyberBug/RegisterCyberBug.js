@@ -56,7 +56,7 @@ const mapLoginCyberBugWithFormik = withFormik({
   }),
 
   handleSubmit: ({ email, password, name, phone }, { props, setSubmitting }) => {
-    console.log(email, password, name, phone)
+  
     props.dispatch(signUpCyberBugAction(email, password, name, phone))
   },
 

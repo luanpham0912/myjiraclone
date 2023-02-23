@@ -13,8 +13,7 @@ function* createProjectSaga(action) {
     yield delay(500)
     try {
         let { data, status } = yield call(() => cyberbugService.createProjectAuthorization(action.newProject))
-        console.log('data',data)
-        console.log('status',status)
+ 
         
 
         if (status === STATUS_CODE.SUCCESS) {
@@ -86,7 +85,7 @@ function* deleteProjectSaga(action){
     try{
         let {data,status} = yield call(()=>{ return projectService.deleteProject(action.projectUpdate)})
         if(status === STATUS_CODE.SUCCESS){
-            console.log(data)
+     
             notifyFunction('success','Delete project successfully !')
         }
         else{
@@ -115,7 +114,7 @@ function* getProjectDetailSaga(action){
     try{
         let {data,status} = yield call(()=>{ return projectService.getProjectDetail(action.projectId)})
         if(status === STATUS_CODE.SUCCESS){
-            console.log(data)
+       
             yield put({
                 type: "PUT_PROJECT_DETAIL",
                 projectDetail : data.content

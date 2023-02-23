@@ -15,8 +15,6 @@ import * as CommentSaga from './CyberBugSaga/CommentSaga'
 export function* rootSaga() {
 
   yield all([
-    //Nghiệp vụ theo dõi các action saga todolist
-
     //Nghiệp vụ theo dõi các action saga cyberbugs
     UserCyberBugSaga.theoDoiSingin(),
     UserCyberBugSaga.theoDoiSignUpSaga(),
@@ -37,6 +35,7 @@ export function* rootSaga() {
     PrioritySaga.theoDoiGetAllPrioritySaga(),
     TaskSaga.theoDoiGetTaskDetailSaga(),
     TaskSaga.theoDoiUpdateTaskSaga(),
+    TaskSaga.theoDoiRemoveTaskSaga(),
     TaskSaga.theoDoiCreateTaskSaga(),
     TaskTypeSaga.theoDoiGetTaskTypeSaga(),
     CommentSaga.theoDoiInsertCommentSaga(),

@@ -3,10 +3,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function UserEdit(props) {
-    console.log(props.match.params.id)
+   
     const dispatch = useDispatch()
     const { userSearch } = useSelector(state => state.UsersCyberBugReducer)
-    console.log("first,", userSearch)
+   
     useEffect(() => {
         dispatch({
             type: "GET_USERS_SAGA",
@@ -24,14 +24,14 @@ export default function UserEdit(props) {
             phoneNumber: userSearch[0]?.phoneNumber || ''
         },
         onSubmit: (values) => {
-            console.log("values", values)
+           
             dispatch({
                 type: "EDIT_USER_SAGA",
                 user : values
             })
         }
     })
-    console.log("editFormik.values", editFormik.values)
+
     return (
         <div style={{width: "70%" , }}>
             <h3 className='p-3 font-weight-bold'> Edit User - {userSearch[0]?.name} </h3>

@@ -17,7 +17,7 @@ export const DrawerCyberbug = (state = initialState, action) => {
     return { ...state,visible : false }
   }
   case "OPEN_FORM" : {
-     console.log(action)
+    
      state.visible = true
      state.title = action.title
      state.ComponentContentDrawer = action.Component

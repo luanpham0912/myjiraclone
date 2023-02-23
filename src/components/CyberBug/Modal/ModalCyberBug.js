@@ -126,7 +126,7 @@ export default function ModalCyberBug(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-      
+
         if (comment !== '') {
             dispatch({
                 type: "INSERT_COMMENT_SAGA",
@@ -144,18 +144,16 @@ export default function ModalCyberBug(props) {
 
     }
 
-    // const handleChane = (e) => {
-    //     setComment(e.target.value)
-    //     console.log(comment)
-    // }
+
     return (
         <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
             <div className="modal-dialog modal-info">
                 <div className="modal-content">
                     <div className="modal-header">
                         <div className="task-title">
+
                             <i className="fa fa-bookmark" />
-                            <select value={taskDetailModal?.typeId} name='typeId' onChange={handChange}>
+                            <select value={taskDetailModal?.typeId} name='typeId' onChange={handChange} style={{ outline: "none", border: "none" }}>
                                 {arrType.map((item, index) => {
                                     return <option key={item.id} value={item.id}>{item.taskType}</option>
                                 })}
@@ -163,14 +161,21 @@ export default function ModalCyberBug(props) {
                         </div>
                         <div style={{ display: 'flex' }} className="task-click">
                             <div>
-                                <i className="fab fa-telegram-plane" />
-                                <span style={{ paddingRight: 20 }}>Give feedback</span>
+                                <i className="fa fa-location-arrow"></i>
+                                <span style={{ paddingRight: 20 }}> Give feedback</span>
                             </div>
                             <div>
                                 <i className="fa fa-link" />
-                                <span style={{ paddingRight: 20 }}>Copy link</span>
+                                <span style={{ paddingRight: 20 }}> Copy link</span>
                             </div>
-                            <i className="fa fa-trash-alt" style={{ cursor: 'pointer' }} />
+                            <i onClick={() => {
+                                if(window.confirm(`You want to remove task: " ${taskDetailModal.taskName} " ?`)){
+                                    dispatch({
+                                        type: "REMOVE_TASK_SAGA",
+                                        taskDetailModal: taskDetailModal
+                                    })
+                                }
+                            }} className="fa fa-trash-alt" style={{ cursor: 'pointer' }} />
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -204,7 +209,7 @@ export default function ModalCyberBug(props) {
                                                         // setValue(newValue);
                                                         // setText(editor.getContent({format: 'text'}));
                                                     }}
-                                                    
+
                                                     init={{
                                                         height: 200,
                                                         menubar: false,
@@ -332,7 +337,7 @@ export default function ModalCyberBug(props) {
                                                 }
                                                 optionFilterProp="label"
                                                 onSelect={(value) => {
-                                                    console.log(value)
+                                                  
                                                     if (value === "0") {
                                                         return;
                                                     }

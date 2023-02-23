@@ -25,7 +25,7 @@ export default function UserManager(props) {
     })
 
   }, [])
-  console.log(arrUser)
+ 
   const columns = [
     {
       title: 'ID',
@@ -124,7 +124,7 @@ export default function UserManager(props) {
 
 
   const handleSearch = (value) => {
-    console.log(value,"hahahaha")
+   
     //debounce search
     if (searchRef.current) {
 

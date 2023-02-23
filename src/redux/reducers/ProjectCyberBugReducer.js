@@ -7,7 +7,6 @@ export default (state = initialState, action) => {
 
     case "ALL_PROJECTLIST" : {
       state.projectList = action.data
-      console.log("data", state.projectList)
       return {...state}
     }
 

@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import ReactHtmlParser from 'react-html-parser';
 import parse from 'html-react-parser'
+import { Avatar } from 'antd'
 
 
 export default function IndexCyberBug(props) {
 
 
     const {projectDetail} = useSelector(state => state.ProjectReducer)
-    console.log('project.det',projectDetail)
+    
     const dispatch = useDispatch();
     useEffect(() => {
         let {projectId} = props.match.params
@@ -53,11 +54,12 @@ export default function IndexCyberBug(props) {
                         </div>
                         <div className="block-right">
                             <div className="avatar-group" style={{ display: 'flex' }}>
-                                {taskDt.assigness.map((mem,index)=> {
+                                {taskDt.assigness.slice(0,3).map((mem,index)=> {
                                     return <div key={index } className="avatar">
                                     <img src={mem.avatar} alt='1' />
                                 </div>
                                 })}
+                                  {taskDt.assigness?.length > 3 ? <Avatar style={{width : "40px", height:"40px"}}>...</Avatar> : ''}
                             </div>
                         </div>
                     </div>

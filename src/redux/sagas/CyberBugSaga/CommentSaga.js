@@ -68,14 +68,14 @@ export function * theoDoiGetAllCommentSaga(){
 function * editCommentSaga(action){
     try{
         const {data, status} = yield call(()=> commentService.editComment(action.id,action.newComt))
-        console.log("EDIT",data.content)
+     
         yield put({
             type: "GET_ALL_COMMENT_SAGA",
             taskId :  data.content.taskId
         })
 
     }catch (err){
-
+        console.log(err)
     }
 }
 
